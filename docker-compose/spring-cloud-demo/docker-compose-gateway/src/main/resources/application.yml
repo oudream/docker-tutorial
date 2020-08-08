@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: docker-compose-gateway
+
+server:
+  port: 2333
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://docker-compose-eureka:1234/eureka/
+
+zuul:
+  routes:
+    demo-api-a:
+      serviceId: demo-api-a
+      path: /**
+    demo-api-b:
+      serviceId: demo-api-b
+      path: /**
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000

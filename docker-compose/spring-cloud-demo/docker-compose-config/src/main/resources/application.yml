@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: docker-compose-config
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: /usr/local/tomcat/project/docker-compose-demo/config/
+        git:
+          uri: https://github.com/liumapp/docker-compose-demo/
+          search-paths: config
+  profiles:
+      active: git
+
+server:
+  port: 7001
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://docker-compose-eureka:1234/eureka/
+

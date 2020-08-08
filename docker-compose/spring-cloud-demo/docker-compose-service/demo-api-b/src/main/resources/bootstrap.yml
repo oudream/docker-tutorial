@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: demo-api-b
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: docker-compose-config
+      profile: dev
+      label: master
+server:
+  port: 8082
+eureka:
+  client:
+    service-url:
+      defaultZone: http://docker-compose-eureka:1234/eureka/

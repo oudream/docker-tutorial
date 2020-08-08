@@ -1,3 +1,5 @@
+[来自修改](https://github.com/twtrubiks/docker-tutorial)
+
 ## 简介
 [Docker](https://www.docker.com/)
 
@@ -29,12 +31,6 @@ Comparing Containers and Virtual Machines ( 传统的虚拟化 )
 
 详细可参考 [https://www.docker.com/what-container](https://www.docker.com/what-container)
 
-Virtual Machines 是什么？
-
-类似 [https://www.virtualbox.org/](https://www.virtualbox.org/)，我们可能用它装装看其他作业系统，例如说
-
-我是 MAC，但我想玩 Windows，我就会在 MAC 中装 VM 并且灌 Windows 系统。
-
 一个表格了解 Docker 有多棒 :+1:
 
 Feauture  | Containers                  |  Virtual Machines ( 传统的虚拟化 )
@@ -45,58 +41,49 @@ Feauture  | Containers                  |  Virtual Machines ( 传统的虚拟�
  支援数量 | 非常多 Containers        | 10多个就很了不起了
  复制相同环境 | 快        | 超慢
 
-不理解:question::question::question:
-
-我们来看一张图，包准你懂
-
 ![](https://i.imgur.com/H8wmOUh.jpg)
 
 图的来源
 [https://blog.jayway.com/2015/03/21/a-not-very-short-introduction-to-docker/](https://blog.jayway.com/2015/03/21/a-not-very-short-introduction-to-docker/)
 
-### 为什么要使用 Docker
+### 使用场景
+- Docker 的使用场景创建一致的开发、测试、生产环境；  
+- 创建资源隔离的运行时环境；
+- 创建多用户的平台即服务（PaaS）的基础设施；
+- 创建软件即服务（SaaS）的应用程序；高性能、超大规模宿主机部署；
 
-潮～ 不解释 :satisfied:
+### Docker 版本
+- Docker 是一个开源的商业产品，有两个版本：社区版（Community Edition，缩写为 CE）和企业版（Enterprise Edition，缩写为 EE）。
+- 企业版包含了一些收费服务，个人开发者一般用不到。下面的介绍都针对社区版。
 
-#### 更有效率的利用资源
-
-比起象是 [https://www.virtualbox.org/](https://www.virtualbox.org/)，Docker 的利用率更高，我们可以设定更多
-
-的 Containers ，而且启动速度飞快！！:flushed:
-
-#### 统一环境
-
-相信大家都有每次搞计算机的环境都搞的很烦的经验 :angry:
-
-假设今天公司来了个新同事，就又要帮他建立一次环境 :expressionless:
-
-不然就是，我的计算机 run 起来正常阿～ 你的怎么不行，是不是 xxx 版本的关系阿 :joy:
-
-相信大家多多少少都遇过上面这些事情，我们可以透过 Docker 来解决这些问题，
-
-保持大家环境一致，而且要建立的时候也很快 :smile:
-
-#### 对于 DevOps 的好处
-
-对于 [DevOps](https://zh.wikipedia.org/wiki/DevOps) 来说，最希望的就是可以设定一次，将来在其他地方都可以快速建立环境且正常执行。
 
 ### Docker 概念
 
-建议大家先了解一下 Docker 中的几个名词，分别为
+> 建议大家先了解一下 Docker 中的几个名词，分别为
 
-***Image***
+***Image 镜像***
 
-映像档，可以把它想成是以前我们在玩 VM 的 Guest OS（ 安装在虚拟机上的作业系统 ）。
+> 镜像，可以把它想成是以前我们在玩 VM 的 Guest OS（ 安装在虚拟机上的作业系统 ）。
 
-Image 是唯读（ R\O ）
+Image 是只读（ R\O ）
 
-***Container***
+***Container 容器***
 
-容器，利用映像档（ Image ）所创造出来的，一个 Image 可以创造出多个不同的 Container，
+> 容器，利用镜像（ Image ）所创造出来的，一个 Image 可以创造出多个不同的 Container，
 
-Container 也可以被启动、开始、停止、删除，并且互相分离。
+> Container 也可以被启动、开始、停止、删除，并且互相分离。
 
-Container 在启动的时候会建立一层在最外（上）层并且是读写模式（ R\W ）。
+> Container 在启动的时候会建立一层在最外（上）层并且是读写模式（ R\W ）。
+
+Docker 的镜像分层机制：
+> Docker 镜像是分层构建的，Dockerfile 中每条指令都会新建一层。例如以下 Dockerfile:
+```bash
+FROM ubuntu:18.04
+COPY . /app
+RUN make /app
+CMD python /app/app.py
+```
+> 以上四条指令会创建四层，分别对应基础镜像、复制文件、编译文件以及入口文件，每层只记录本层所做的更改，而这些层都是只读层。当你启动一个容器，Docker 会在最顶部添加读写层，你在容器内做的所有更改，如写日志、修改、删除文件等，都保存到了读写层内，一般称该层为容器层，如下图所示
 
 这张图解释了 Image 是唯读（ R\O ）以及 Container 是读写模式（ R\W ） 的关系
 
@@ -104,7 +91,7 @@ Container 在启动的时候会建立一层在最外（上）层并且是读写�
 
 更多关系可参考 [https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/#images-and-layers](https://docs.docker.com/engine/userguide/storagedriver/imagesandcontainers/#images-and-layers)
 
-***Registry***
+***Registry 仓库***
 
 可以把它想成类似 [GitHub](https://github.com/)，里面存放了非常多的 Image ，可在 [Docker Hub](https://hub.docker.com/) 中查看。
 
@@ -114,30 +101,33 @@ Container 在启动的时候会建立一层在最外（上）层并且是读写�
 
 Windows
 
-请先到 Docker 官网
+> Windows安装有两种方式：依赖 Hyper-V、依赖 WSL
 
-[https://www.docker.com/docker-windows](https://www.docker.com/docker-windows)
+- 依赖 WSL
+> 参考：[https://docs.docker.com/docker-for-windows/wsl/](https://docs.docker.com/docker-for-windows/wsl/)
 
-下载 stable 版本
+- 依赖 Hyper-V
+> 请先到 Docker 官网  
+> [https://www.docker.com/docker-windows](https://www.docker.com/docker-windows)  
+> 下载 stable 版本
 
 ![](https://i.imgur.com/ryKtNXm.jpg)
 
-接下来就是无脑安装，安装完后他会叫你登出计算机，点下去后就会帮你登出计算机
+> 接下来就是无脑安装，安装完后他会叫你登出计算机，点下去后就会帮你登出计算机
 
 ![](https://i.imgur.com/EE7XmYM.jpg)
 
-接着如果你的计算机没有启用 [Hyper-V](https://msdn.microsoft.com/zh-tw/library/hh831531(v=ws.11).aspx) ，他会叫你重启计算机
-(一样，点下去就对惹)
-
-( 更多可 Hyper-V 介绍请参考 [https://docs.microsoft.com/zh-tw/virtualization/hyper-v-on-windows/about/](https://docs.microsoft.com/zh-tw/virtualization/hyper-v-on-windows/about/) )
+> 接着如果你的计算机没有启用 [Hyper-V](https://msdn.microsoft.com/zh-tw/library/hh831531(v=ws.11).aspx) ，他会叫你重启计算机
+(一样，点下去就对惹)  
+> ( 更多可 Hyper-V 介绍请参考 [https://docs.microsoft.com/zh-tw/virtualization/hyper-v-on-windows/about/](https://docs.microsoft.com/zh-tw/virtualization/hyper-v-on-windows/about/) )
 
 ![](https://i.imgur.com/YG79VE1.jpg)
 
-重新开机后，你就会发现可爱的 Docker 在右下角蹦出来惹
+> 重新开机后，你就会发现可爱的 Docker 在右下角蹦出来惹
 
 ![](https://i.imgur.com/zMgf36E.png)
 
-我们可以再用 cmd 确认一下是否有成功安装
+> 我们可以再用 cmd 确认一下是否有成功安装
 
 ```cmd
 docker --version
@@ -146,47 +136,67 @@ docker-compose --version
 
 ![](https://i.imgur.com/k1o3GIz.png)
 
-记得再设定一个东西 Shared Drives
+> 记得再设定一个东西 Shared Drives
 
 ![](https://i.imgur.com/a6dqWU8.jpg)
 
-装完了之后，建议大家再多装一个 [Kitematic](https://kitematic.com/)，他是 GUI 界面的，方便你使用 Docker，
+> 装完了之后，建议大家再多装一个 [Kitematic](https://kitematic.com/)，他是 GUI 界面的，方便你使用 Docker，  
+> ( 后面会再介绍一个更赞的 GUI 界面 [portainer](https://github.com/portainer/portainer)  :grin: )  
+> 我知道打指令很潮，但还是建议装一下。
 
-( 后面会再介绍一个更赞的 GUI 界面 [portainer](https://github.com/portainer/portainer)  :grin: )
-
-我知道打指令很潮，但还是建议装一下。
-
-直接对着你的 Docker 图示右键，就可以看到 [Kitematic](https://kitematic.com/)
+> 直接对着你的 Docker 图示右键，就可以看到 [Kitematic](https://kitematic.com/)
 
 ![](https://i.imgur.com/gdVFFMT.png)
 
 ![](https://i.imgur.com/SRaHNCP.jpg)
 
-下载回来直接解压缩双点击即可使用
+> 下载回来直接解压缩双点击即可使用
 
 ![](https://i.imgur.com/9zsU23B.png)
 
-MAC
+- MAC
 
-MAC 我本身也有，但因为更早之前就装了，步骤就没记录了，基本上大同小异
+> MAC 我本身也有，但因为更早之前就装了，步骤就没记录了，基本上大同小异
 
 [https://www.docker.com/docker-mac](https://www.docker.com/docker-mac)
 
-Linux
-
-[Youtube Tutorial-Ubuntu(Linux) 如何安装 docker](https://youtu.be/eS_HMBC_RaA)
-
-这里使用 Ubuntu 当作范例,
-
-虽然在 ubuntu 中有 `snap` 可以非常快速的安装 docker,
-
-但在这边我们不使用 `snap` 的方法安装:smile:
-
-请参考官方文件步骤安装,
-
-Get Docker Engine - Community for Ubuntu
-
-[Get Docker Engine - Community for Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+- Linux
+> 参考官网  
+> ubuntu: [https://docs.docker.com/engine/install/ubuntu/](https://docs.docker.com/engine/install/ubuntu/  )
+```bash
+### install - ubuntu
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo docker run hello-world
+```  
+> centos: [https://docs.docker.com/engine/install/centos/](https://docs.docker.com/engine/install/centos/  )
+```bash
+### install - centos
+sudo yum install -y yum-utils
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum-config-manager --enable docker-ce-nightly
+sudo yum-config-manager --enable docker-ce-test
+sudo yum install -y docker-ce docker-ce-cli containerd.io
+#
+sudo systemctl start docker
+sudo docker run hello-world
+```  
 
 安装后步骤 (optional:exclamation:), 但建议参考一下
 
@@ -1442,29 +1452,16 @@ Docker 可以玩的真的很多，延伸参考
 
 ## Reference
 
-* [https://docs.docker.com/](https://docs.docker.com/)
-* [portainer](https://github.com/portainer/portainer)
+[https://docs.docker.com/](https://docs.docker.com/)
 
-## Donation
+[portainer](https://github.com/portainer/portainer)
 
-文章都是我自己研究内化后原创，如果有帮助到您，也想鼓励我的话，欢迎请我喝一杯咖啡:laughing:
+[Docker get-started](https://docs.docker.com/get-started/overview/)
 
-绿界科技ECPAY ( 不需注册会员 )
+[运维和开发视角](https://zhuanlan.zhihu.com/p/93166308)
 
-![alt tag](https://payment.ecpay.com.tw/Upload/QRCode/201906/QRCode_672351b8-5ab3-42dd-9c7c-c24c3e6a10a0.png)
+[DevOps 的分与合](https://cloud.tencent.com/developer/news/604913)
 
-[赞助者付款](http://bit.ly/2F7Jrha)
+[DevOps - wiki](https://zh.wikipedia.org/wiki/DevOps) 
 
-欧付宝 ( 需注册会员 )
-
-![alt tag](https://i.imgur.com/LRct9xa.png)
-
-[赞助者付款](https://payment.opay.tw/Broadcaster/Donate/9E47FDEF85ABE383A0F5FC6A218606F8)
-
-## 赞助名单
-
-[赞助名单](https://github.com/twtrubiks/Thank-you-for-donate)
-
-## License
-
-MIT license
+[DevOps中的作用](https://www.kubernetes.org.cn/7354.html)
