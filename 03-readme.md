@@ -11,12 +11,13 @@
 
 > Docker 是一个开源的应用容器引擎，而一个容器containers其实是一个虚拟化的独立的环境，让开发者可以打包他们的应用以及依赖包到一个可移植的容器中，然后发布到任何流行的 Linux 机器上【
 Windows 虚拟底层支撑：WSL、WSL2/hyper-v；
-[OSX：Hypervisor.framewor](https://developer.apple.com/documentation/hypervisor)
+[OSX：Hypervisor.framewor](https://developer.apple.com/documentation/hypervisor)；
+参考：Docker容器的原理与实践 [上编](https://sq.163yun.com/blog/article/170973039172706304) [上编](https://sq.163yun.com/blog/article/171012695692075008) 
 】，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。
   
-> Docker 的局限性之一，它只能用在 64 位的操作系统上。
-
 > 组成：上游组件（containerd，linuxkit 等）-> Moby -> Docker CE -> Docker EE
+
+> Docker 的局限性之一，它只能用在 64 位的操作系统上。
 
 我们先来看看官网的说明
 
