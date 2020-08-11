@@ -17,7 +17,7 @@
 
 > 当新建一个文件时，如果这个文件在读写存在对应的without文件，则先将without文件删除再创建。否则直接在读写层新建即可。
 
-![](./aufs.png)
+![](res/aufs.png)
 - 典型的Linux启动到运行需要两个FS: bootfs和rootfs
 
 > bootfs (boot file system) 主要包含 bootloader 和 kernel, bootloader主要是引导加载kernel, 当boot成功后 kernel 被加载到内存中后 bootfs就被umount了.

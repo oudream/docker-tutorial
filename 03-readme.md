@@ -55,7 +55,11 @@ Feauture  | Containers                  |  Virtual Machines ( 传统的虚拟�
 ### Docker 版本
 - Docker 是一个开源的商业产品，有两个版本：社区版（Community Edition，缩写为 CE）和企业版（Enterprise Edition，缩写为 EE）。
 - 企业版包含了一些收费服务，个人开发者一般用不到。下面的介绍都针对社区版。
-
+- 社区版（docker CE）分： Edge、Stable两个版本。 
+    - Edge是每个月发布一个版本， Stable一个季度的最后一个月发布一个版本。
+    - Edge使您可以尽早使用最新功能。请注意，某些功能可能是实验性的，而其中某些功能可能永远都无法达到稳定版本。
+    - Stable：https://docs.docker.com/docker-for-mac/release-notes/
+    - Edge：https://docs.docker.com/docker-for-mac/edge-release-notes/
 
 ### Docker 概念
 
@@ -63,9 +67,7 @@ Feauture  | Containers                  |  Virtual Machines ( 传统的虚拟�
 
 ***Image 镜像***
 
-> 镜像，可以把它想成是以前我们在玩 VM 的 Guest OS（ 安装在虚拟机上的作业系统 ）。
-
-Image 是只读（ R\O ）
+> 镜像，可以把它想成是以前我们在玩 VM 的 Guest OS（ 安装在虚拟机上的作业系统 ）。Image 是只读（ R\O ）
 
 ***Container 容器***
 
@@ -154,11 +156,20 @@ docker-compose --version
 
 ![](https://i.imgur.com/9zsU23B.png)
 
+
 - MAC
 
-> MAC 我本身也有，但因为更早之前就装了，步骤就没记录了，基本上大同小异
+```bash
+# If you want to install the newer Docker for Mac, which does not require virtualbox, 
+# you can install that through Homebrew's Cask:
+brew cask install docker
+open /Applications/Docker.app
+```
+参考：  
+[https://www.docker.com/docker-mac](https://www.docker.com/docker-mac)  
+[https://docs.docker.com/docker-for-mac/install/](https://docs.docker.com/docker-for-mac/install/)  
+[https://formulae.brew.sh/cask/docker](https://formulae.brew.sh/cask/docker)  
 
-[https://www.docker.com/docker-mac](https://www.docker.com/docker-mac)
 
 - Linux
 > 参考官网  
@@ -182,7 +193,8 @@ sudo add-apt-repository \
 sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 sudo docker run hello-world
-```  
+``` 
+
 > centos: [https://docs.docker.com/engine/install/centos/](https://docs.docker.com/engine/install/centos/  )
 ```bash
 ### install - centos
@@ -193,7 +205,8 @@ sudo yum-config-manager \
 sudo yum-config-manager --enable docker-ce-nightly
 sudo yum-config-manager --enable docker-ce-test
 sudo yum install -y docker-ce docker-ce-cli containerd.io
-#
+# 开机自启动
+sudo systemctl enable docker
 sudo systemctl start docker
 sudo docker run hello-world
 ```  
