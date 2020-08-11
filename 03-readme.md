@@ -131,7 +131,7 @@ Windows
 
 > 我们可以再用 cmd 确认一下是否有成功安装
 
-```cmd
+```bash
 docker --version
 docker-compose --version
 ```
@@ -235,57 +235,59 @@ docker-compose 的安装
 
 ## 指令介绍
 
-接着介绍一些 Docker 的指令，
+![](res/cBq6363dYL.png)  
+
+![](res/YPuMFRsPmy.png)  
 
 Docker 的指令真的很多，这里就介绍我比较常用的或是实用的指令
 
-查看目前 images
+- [官网 Docker command line](https://docs.docker.com/engine/reference/commandline/cli/)
 
-```cmd
+[查看目前 images](https://docs.docker.com/engine/reference/commandline/images/)
+
+```bash
 docker images
 ```
 
-建立 image
+[建立新 Container](https://docs.docker.com/engine/reference/commandline/create/)
 
-```cmd
-docker create [OPTIONS] IMAGE [COMMAND] [ARG...]
+```bash
+# docker create [OPTIONS] IMAGE [COMMAND] [ARG...]
 ```
-
-详细的参数可参考 [https://docs.docker.com/engine/reference/commandline/create/](https://docs.docker.com/engine/reference/commandline/create/)
 
 范例 ( 建立一个名称为  busybox 的 image )
 
-```cmd
+```bash
 docker create -it --name busybox busybox
 ```
 
 删除 Image
 
-```cmd
+```bash
 docker rmi [OPTIONS] IMAGE [IMAGE...]
 ```
 
 查看目前运行的 container
 
-```cmd
+```bash
 docker ps
 ```
 
 查看目前全部的 container（ 包含停止状态的 container ）
 
-```cmd
+```bash
 docker ps -a
 ```
 
 新建并启动 Container
 
-```cmd
+```bash
 docker run [OPTIONS] IMAGE[:TAG|@DIGEST] [COMMAND] [ARG...]
 ```
 
 举个例子
 
-```cmd
+```bash
 docker run -d -p 80:80 --name my_image nginx
 ```
 
@@ -297,7 +299,7 @@ docker run -d -p 80:80 --name my_image nginx
 
 在举一个例子
 
-```cmd
+```bash
  docker run -it --rm busybox
 ```
 
@@ -307,13 +309,13 @@ docker run -d -p 80:80 --name my_image nginx
 
 启动 Container
 
-```cmd
+```bash
 docker start [OPTIONS] CONTAINER [CONTAINER...]
 ```
 
 如果想让他在前景跑顺便观看输出 , 可以使用以下指令
 
-```cmd
+```bash
 docker start -a [OPTIONS] CONTAINER [CONTAINER...]
 ```
 
@@ -327,19 +329,19 @@ docker start -a [OPTIONS] CONTAINER [CONTAINER...]
 
 停止 Container
 
-```cmd
+```bash
 docker stop [OPTIONS] CONTAINER [CONTAINER...]
 ```
 
 重新启动 Container
 
-```cmd
+```bash
 docker restart [OPTIONS] CONTAINER [CONTAINER...]
 ```
 
 删除 Container
 
-```cmd
+```bash
 docker rm [OPTIONS] CONTAINER [CONTAINER...]
 ```
 
@@ -349,14 +351,14 @@ docker rm [OPTIONS] CONTAINER [CONTAINER...]
 
 进入 Container
 
-```cmd
+```bash
 docker exec [OPTIONS] CONTAINER COMMAND [ARG...]
 docker exec -it <Container ID> bash
 ```
 
 使用 root 使用者进入　
 
-```cmd
+```bash
 docker exec -u 0 -it <Container ID> bash
 docker exec -u root -it <Container ID> bash
 ```
@@ -369,19 +371,19 @@ docker exec -u root -it <Container ID> bash
 
 这时候可以使用以下指令查看
 
-```cmd
+```bash
 cat /etc/os-release
 ```
 
 查看 Container 详细资料
 
-```cmd
+```bash
 docker inspect [OPTIONS] NAME|ID [NAME|ID...]
 ```
 
 查看 log
 
-```cmd
+```bash
 docker logs [OPTIONS] CONTAINER
 ```
 
@@ -392,19 +394,19 @@ docker logs [OPTIONS] CONTAINER
 
 从最后 100 行开始追踪,
 
-```cmd
+```bash
 docker logs -f --tail 100 CONTAINER
 ```
 
 显示容器资源 ( CPU , I/O ...... )
 
-```cmd
+```bash
 docker stats [OPTIONS] [CONTAINER...]
 ```
 
 停止指定的 CONTAINER 中全部的 **processes**
 
-```cmd
+```bash
 docker pause CONTAINER [CONTAINER...]
 ```
 
@@ -418,19 +420,19 @@ docker pause CONTAINER [CONTAINER...]
 
 恢复指定暂停的 CONTAINER 中全部的 **processes**
 
-```cmd
+```bash
 docker unpause CONTAINER [CONTAINER...]
 ```
 
 docker tag
 
-```cmd
+```bash
 docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
 ```
 
 范例
 
-```cmd
+```bash
 docker tag 0e5574283393 twtrubiks/nginx:version1.0
 ```
 
@@ -438,26 +440,26 @@ docker tag 0e5574283393 twtrubiks/nginx:version1.0
 
 储存 (备份) image 成 tar 档案
 
-```cmd
+```bash
 
 [OPTIONS] IMAGE [IMAGE...]
 ```
 
 范例
 
-```cmd
+```bash
 docker save busybox > busybox.tar
 ```
 
 或
 
-```cmd
+```bash
 docker save --output busybox.tar busybox
 ```
 
 或 ( 也可以一次备份多个 )
 
-```cmd
+```bash
 docker save -o images.tar postgres:9.6 busybox
 ```
 
@@ -465,19 +467,19 @@ docker save -o images.tar postgres:9.6 busybox
 
 载入 image
 
-```cmd
+```bash
 docker load [OPTIONS]
 ```
 
 范例
 
-```cmd
+```bash
 docker load < busybox.tar
 ```
 
 或
 
-```cmd
+```bash
 docker load -i busybox.tar
 ```
 
@@ -485,7 +487,7 @@ docker load -i busybox.tar
 
 显示 image 的 history，查询 image 的每一层
 
-```cmd
+```bash
 docker history [OPTIONS] IMAGE
 ```
 
@@ -507,13 +509,13 @@ docker import container 请参考 [https://docs.docker.com/engine/reference/comm
 
 删除所有 dangling images
 
-```cmd
+```bash
 docker image prune
 ```
 
 移除全部 unused images (不只 dangling images)
 
-```cmd
+```bash
 docker image prune -a
 ```
 
@@ -521,7 +523,7 @@ docker image prune -a
 
 停止所有正在运行的 Container
 
-```cmd
+```bash
 docker container stop $(docker ps -q)
 ```
 
@@ -529,7 +531,7 @@ docker container stop $(docker ps -q)
 
 移除全部停止的 containers
 
-```cmd
+```bash
 docker container prune
 ```
 
@@ -560,31 +562,31 @@ volume 的内容存在于 container 之外。
 
 查看目前的 volume
 
-```cmd
+```bash
 docker volume ls [OPTIONS]
 ```
 
 创造一个 volume
 
-```cmd
+```bash
 docker volume create [OPTIONS] [VOLUME]
 ```
 
 删除一个 volume
 
-```cmd
+```bash
 docker volume rm [OPTIONS] VOLUME [VOLUME...]
 ```
 
 查看 volume 详细资料
 
-```cmd
+```bash
 docker volume inspect [OPTIONS] VOLUME [VOLUME...]
 ```
 
 移除全部未使用的 volume
 
-```cmd
+```bash
 docker volume prune [OPTIONS]
 ```
 
@@ -594,7 +596,7 @@ docker volume prune [OPTIONS]
 
 查看目前 docker 的网络清单
 
-```cmd
+```bash
 docker network ls [OPTIONS]
 ```
 
@@ -604,37 +606,37 @@ docker 中的网络主要有三种 Bridge、Host、None，预设皆为 Bridge �
 
 指定 network 范例 ( 指定使用  `host` 网络 )
 
-```cmd
+```bash
 docker run -it --name busybox --rm --network=host busybox
 ```
 
 建立 network
 
-```cmd
+```bash
 docker network create [OPTIONS] NETWORK
 ```
 
 移除 network
 
-```cmd
+```bash
 docker network rm NETWORK [NETWORK...]
 ```
 
 移除全部未使用的 network
 
-```cmd
+```bash
 docker network prune [OPTIONS]
 ```
 
 查看 network 详细资料
 
-```cmd
+```bash
 docker network inspect [OPTIONS] NETWORK [NETWORK...]
 ```
 
 将 container 连接 network
 
-```cmd
+```bash
 docker network connect [OPTIONS] NETWORK CONTAINER
 ```
 
@@ -642,7 +644,7 @@ docker network connect [OPTIONS] NETWORK CONTAINER
 
 Disconnect container  network
 
-```cmd
+```bash
 docker network disconnect [OPTIONS] NETWORK CONTAINER
 ```
 
@@ -680,43 +682,43 @@ Compose 的 Command-line 很多和 Docker 都是类似的，
 
 查看目前 Container
 
-```cmd
+```bash
 docker-compose ps
 ```
 
 加上 `-q` 的话，只显示 id
 
-```cmd
+```bash
 docker-compose ps -q
 ```
 
 启动 Service 的 Container
 
-```cmd
+```bash
 docker-compose start  [SERVICE...]
 ```
 
 停止 Service 的 Container ( 不会删除 Container )
 
-```cmd
+```bash
 docker-compose stop [options] [SERVICE...]
 ```
 
 重启 Service 的 Container
 
-```cmd
+```bash
 docker-compose restart [options] [SERVICE...]
 ```
 
 Builds, (re)creates, starts, and attaches to containers for a service
 
-```cmd
+```bash
 docker-compose up [options] [--scale SERVICE=NUM...] [SERVICE...]
 ```
 
 加个 `-d`，会在背景启动，一般建议正式环境下使用。
 
-```cmd
+```bash
 docker-compose up -d
 ```
 
@@ -726,13 +728,13 @@ docker-compose up -d
 
 `--build` ( Build images before starting containers. )
 
-```cmd
+```bash
 docker-compose up -d --build
 ```
 
 docker-compose down
 
-```cmd
+```bash
 docker-compose down [options]
 ```
 
@@ -740,7 +742,7 @@ docker-compose down [options]
 
 举个例子
 
-```cmd
+```bash
 docker-compose down -v
 ```
 
@@ -748,14 +750,14 @@ docker-compose down -v
 
 在指定的 Service 中执行一个指令
 
-```cmd
+```bash
 docker-compose run [options] [-v VOLUME...] [-p PORT...] [-e KEY=VAL...] SERVICE [COMMAND] [ARGS...]
 [ARGS...]
 ```
 
 举个例子
 
-```cmd
+```bash
 docker-compose run web bash
 ```
 
@@ -765,43 +767,43 @@ docker-compose run web bash
 
 观看 Service logs
 
-```cmd
+```bash
 docker-compose logs [options] [SERVICE...]
 ```
 
 检查 `docker-compose.yml` 格式是否正确
 
-```cmd
+```bash
 docker-compose config
 ```
 
 如下指令，和 `docker exec` 一样
 
-```cmd
+```bash
 docker-compose exec
 ```
 
 范例 ( 进入 web 这个 service 的 bash )
 
-```cmd
+```bash
 docker-compose exec web bash
 ```
 
 显示被使用到的 container 中的 images 清单
 
-```cmd
+```bash
 docker-compose images
 ```
 
 移除  service containers
 
-```cmd
+```bash
 docker-compose rm
 ```
 
 Pushes images 到 docker hub
 
-```cmd
+```bash
 docker-compose push
 ```
 
@@ -923,7 +925,7 @@ ports:
 
 这边使用 dpage/pgadmin4 这个 images 来示范，
 
-```cmd
+```bash
 docker run -p 80 \
     -e "PGADMIN_DEFAULT_EMAIL=xxxrubiks@gmail.com" \
     -e "PGADMIN_DEFAULT_PASSWORD=SuperSecret" \
@@ -980,7 +982,7 @@ expose 是本机(HOST) 无法被访问，只有在 containers 中可以被访问
 
 首先，先登入 [Docker Registry](https://hub.docker.com/)  ( 注册流程很简单，我就跳过了 )
 
-```cmd
+```bash
 docker login
 ```
 
@@ -988,13 +990,13 @@ docker login
 
 举个例子，先 run 一个 busybox 的容器
 
-```cmd
+```bash
 docker run -it busybox
 ```
 
 接着在里面新增一笔资料
 
-```cmd
+```bash
  echo 'text' > data.txt
 ```
 
@@ -1008,13 +1010,13 @@ docker run -it busybox
 
 docker commit
 
-```cmd
+```bash
 docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
 ```
 
 可参考 [https://docs.docker.com/engine/reference/commandline/commit/](https://docs.docker.com/engine/reference/commandline/commit/)
 
-```cmd
+```bash
 docker commit -m "test" 4fb4ef51e917 twtrubiks/my_busybox
 ```
 
@@ -1024,7 +1026,7 @@ twtrubiks/my_busybox 则为我们定义的 REPOSITORY。
 
 如果需要 tag , 也可以增加
 
-```cmd
+```bash
 docker commit -m "test" 4fb4ef51e917 twtrubiks/my_busybox:v1
 ```
 
@@ -1036,7 +1038,7 @@ docker commit -m "test" 4fb4ef51e917 twtrubiks/my_busybox:v1
 
 最后 push
 
-```cmd
+```bash
 docker push twtrubiks/my_busybox
 ```
 
@@ -1135,7 +1137,7 @@ volumes:
 
 可能有人会问为什么我是使用 `0.0.0.0`，而不是使用 `127.0.0.1`:question::question:
 
-```cmd
+```bash
 python manage.py runserver 0.0.0.0:8000
 ```
 
@@ -1171,19 +1173,19 @@ python manage.py runserver 0.0.0.0:8000
 
 首先，为了让容器彼此可以沟通，我们先建立一个网络 ( User-defined networks )，
 
-```cmd
+```bash
 docker network create my_network
 ```
 
 db 容器
 
-```cmd
+```bash
 docker run --name db -v pgdata:/var/lib/postgresql/data/ -p 5432:5432 --network=my_network -e POSTGRES_PASSWORD=password123 postgres
 ```
 
 接下来先去 api 资料夹中 build 出 image
 
-```cmd
+```bash
 docker build --tag web_image .
 ```
 
@@ -1191,13 +1193,13 @@ docker build --tag web_image .
 
 也可以是
 
-```cmd
+```bash
 docker build -t user/repo:tag .
 ```
 
 web 容器
 
-```cmd
+```bash
 docker run --name web -v api_data:/docker_api -p 8000:8000 --network=my_network --restart always web_image python manage.py runserver 0.0.0.0:8000
 ```
 
@@ -1205,7 +1207,7 @@ docker run --name web -v api_data:/docker_api -p 8000:8000 --network=my_network 
 
 设定完了之后，接下来我们就可以启动他了
 
-```cmd
+```bash
 docker-compose up
 ```
 
@@ -1235,7 +1237,7 @@ docker-compose up
 
 透过刚刚介绍的指令进入 service
 
-```cmd
+```bash
 docker ps
 docker exec -it <Container ID> bash
 ```
@@ -1244,7 +1246,7 @@ docker exec -it <Container ID> bash
 
 进入后我们可以开始 migrate
 
-```cmd
+```bash
 python manage.py makemigrations musics
 python manage.py migrate
 ```
@@ -1253,7 +1255,7 @@ python manage.py migrate
 
 顺便在建立一个 superuser
 
-```cmd
+```bash
 python manage.py createsuperuser
 ```
 
@@ -1305,7 +1307,7 @@ python manage.py createsuperuser
 
 安装方法可参考 [https://portainer.io/install.html](https://portainer.io/install.html)
 
-```cmd
+```bash
 docker volume create portainer_data
 docker run --name=portainer -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
 ```
@@ -1342,31 +1344,31 @@ Windows
 
 查看所有 port 的占用状况
 
-```cmd
+```bash
 netstat -ano
 ```
 
 查看指定 port 的占用状况，例如现在想要查看 port 5432 占用的状况
 
-```cmd
+```bash
 netstat -aon|findstr "5432"
 ```
 
 查看 PID 对应的 process
 
-```cmd
+```bash
 tasklist|findstr "2016"
 ```
 
 停止 PID 为 6093 的 process
 
-```cmd
+```bash
 taskkill /f /PID 6093
 ```
 
 停止 vscode.exe process
 
-```cmd
+```bash
 taskkill /f /t /im vscode.exe
 ```
 
@@ -1374,13 +1376,13 @@ MAC
 
 将 port 为 8000 的 process 全部停止
 
-```cmd
+```bash
 sudo lsof -t -i tcp:8000 | xargs kill -9
 ```
 
 查看指定 port 的占用状况，例如现在想要查看 port 5432 占用的状况
 
-```cmd
+```bash
 lsof -i tcp:5432
 ```
 
@@ -1422,13 +1424,13 @@ log 是一个 json 的档案
 
 删除全部 container 的 logs
 
-```cmd
+```bash
 truncate -s 0 /var/lib/docker/containers/*/*-json.log
 ```
 
 但是有时候只希望针对(清除)某个 container 的 logs, 这时候就可以使用以下的指令
 
-```cmd
+```bash
 truncate -s 0 $(docker inspect --format='{{.LogPath}}' <container_name_or_id>)
 ```
 

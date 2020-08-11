@@ -41,3 +41,12 @@ docker save -o ubuntu-hello2.tar oudream/ubuntu-hello2
 ### docker load
 # docker load [OPTIONS]
 docker load -i ubuntu-hello2.tar
+
+
+### portainer
+docker volume create portainer_data
+docker run -d -p 8000:8000 -p 80:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+
+
+### 作业
+编写 Dockerfile
