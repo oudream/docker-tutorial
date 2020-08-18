@@ -49,8 +49,10 @@ WORKDIR /usr/local/testdir
 ```bash
 # 将1.txt拷贝到根目录下。它不仅仅能拷贝单个文件，还支持Go语言风格的通配符，比如如下：
 COPY 1.txt /
+
 # 拷贝所有 abc 开头的文件到testdir目录下
 COPY abc* /testdir/
+
 # ? 是单个字符的占位符，比如匹配文件 abc1.log
 COPY abc?.log /testdir/
 ```
@@ -59,6 +61,7 @@ COPY abc?.log /testdir/
 ```bash
 # 将1.txt拷贝到根目录的abc目录下。若/abc不存在，则会自动创建
 ADD 1.txt /abc
+
 # 将test.tar.gz解压缩然后将解压缩的内容拷贝到/home/work/test
 ADD test.tar.gz /home/work/test
 ```
@@ -79,6 +82,7 @@ ADD可以支持拷贝的时候顺带解压缩文件，以及添加远程文件�
 ```bash
 # 设置环境常量，方便下文引用，比如：
 ENV JAVA_HOME /usr/local/jdk1.8
+
 # 引用上面的常量，下面的RUN指令可以先不管啥意思，目的是想说明下文可以通过${xxx}的方式引用
 RUN ${JAVA_HOME}/bin/java -jar xxx.jar
 ```
@@ -90,8 +94,10 @@ RUN ${JAVA_HOME}/bin/java -jar xxx.jar
 ```bash
 # SHELL命令格式
 RUN yum -y install vim
+
 # EXEC命令格式
 RUN ["yum","-y","install","vim"]
+
 # SHELL：当前shell是父进程，生成一个子shell进程去执行脚本，脚本执行完后退出子shell进程，回到当前父shell进程。
 # EXEC：用EXEC进程替换当前进程，并且保持PID不变，执行完毕后直接退出，不会退回原来的进程。
 # 也就是说shell会创建子进程执行，EXEC不会创建子进程。
@@ -100,8 +106,23 @@ RUN ["yum","-y","install","vim"]
 > CMD
 ```txt
 类似于 RUN 指令，用于运行程序，但二者运行的时间点不同:
+
 CMD 在docker run 时运行。
+
 RUN 是在 docker build。
+
 作用：为启动的容器指定默认要运行的程序，程序运行结束，容器也就结束。CMD 指令指定的程序可被 docker run 命令行参数中指定要运行的程序所覆盖。
+
 注意：如果 Dockerfile 中如果存在多个 CMD 指令，仅最后一个生效。
+```
+
+> 
+```txt
+类似于 CMD 指令，但其不会被 docker run 的命令行参数指定的指令所覆盖，而且这些命令行参数会被当作参数送给 ENTRYPOINT 指令指定的程序。
+
+但是, 如果运行 docker run 时使用了 --entrypoint 选项，此选项的参数可当作要运行的程序覆盖 ENTRYPOINT 指令指定的程序。
+
+优点：在执行 docker run 的时候可以指定 ENTRYPOINT 运行所需的参数。
+
+注意：如果 Dockerfile 中如果存在多个 ENTRYPOINT 指令，仅最后一个生效。
 ```
