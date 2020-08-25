@@ -1,14 +1,57 @@
 
 ### Docker Volume
 
-```bash
+```shell script
+docker volume --help
+```
 
-docker run -it -v /home/oudream/data:/data ubuntu /bin/bash
+### volume command
+```text
+
+docker volume COMMAND
+
+Manage volumes
+
+Commands:
+  create      Create a volume
+  inspect     Display detailed information on one or more volumes
+  ls          List volumes
+  prune       Remove all unused local volumes
+  rm          Remove one or more volumes
+
+Run 'docker volume COMMAND --help' for more information on a command.
+
 
 ```
 
-```bash
+### demo
+- 創建
+```shell script
+docker volume create my-volume-2
+docker volume inspect my-volume-2
+```
+```text
+[
+    {
+        "CreatedAt": "2020-08-25T10:09:14+08:00",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/my-volume-2/_data",
+        "Name": "my-volume-2",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+```
 
-docker run --name mysql1 -v /home/oudream/mydata:/var/lib/mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD="Aa.123456" mysql:5.7
+- 使用
+```shell script
+# docker run -d --rm ubuntu:18.04 /bin/sh -c "while sleep 2;do printf aaabbbccc134\\n; done;"
+
+# 1
+docker run --name=hello-volume1 -v my-volume-2:/my-v-2-1 -d ubuntu:18.04 /bin/sh -c "while sleep 2;do printf my-v-2-1...\\n; done;"
+
+# 2
+docker run --name=hello-volume2 -v my-volume-2:/my-v-2-2 -d ubuntu:18.04 /bin/sh -c "while sleep 2;do printf my-v-2-2...\\n; done;"
 
 ```

@@ -47,3 +47,11 @@ docker load -i ubuntu-hello2.tar
 ### portainer
 docker volume create portainer_data
 docker run -d -p 8000:8000 -p 80:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+
+
+### docker logs
+# linux
+/var/lib/docker/containers/
+# windows
+C:\ProgramData\DockerDesktop\vm-data\DockerDesktop.vhdx
+

@@ -13,6 +13,6 @@ WORKDIR /hello
 
 ENV JAVA_HOME /hello/jdk1.8
 
-CMD /hello/entrypoint.sh
-# CMD ["/hello/entrypoint.sh"]
+# CMD /hello/entrypoint.sh
+CMD ["/hello/entrypoint.sh"]
 # ENTRYPOINT ["/hello/entrypoint.sh"]
